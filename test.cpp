@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <iomanip>
 using namespace std;
 
 class BigDecimal {
@@ -40,6 +42,12 @@ public:
 	inline void print() {
 		cout.precision(countDecimals(mThisNum));
 		cout << std::fixed << mThisNum << endl;
+	}
+
+	inline std::string toString() {
+		std::stringstream ss;
+		cout << std::setprecision(countDecimals(mThisNum)) << std::fixed << mThisNum << endl;
+		return ss.str();
 	}
 
 	inline BigDecimal operator* (BigDecimal x) {
@@ -114,13 +122,14 @@ public:
  
 int main()
 {
-	BigDecimal x(34.00000000001);
+	BigDecimal x(34.000000000001);
 
 
 	x = x.increaseBy(2);
 
 	x = x.increaseBy(1);
 	x.print();
+	cout << x.toString() << endl;
 
 	/*
 	int xx=0;
