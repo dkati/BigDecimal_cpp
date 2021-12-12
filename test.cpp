@@ -50,6 +50,34 @@ public:
 	inline BigDecimal operator+ (BigDecimal x) {
 		BigDecimal z(this->mThisNum + x.get());
 		return z;
+		/*
+		double c = x.get();
+		double _atomicDigit;
+		double _baseDigit = this->mThisNum;
+		__asm {
+			mov eax, _baseDigit
+			mov ecx, c
+			add eax, ecx
+			mov _atomicDigit, eax
+		}*/
+		/* i bet for linux it would be
+		__asm__ __volatile__( {
+
+		)}
+		i may need "=r" for GCC and ROS builds
+		or maybe a shit like
+		extern "C" int func();
+		asm(R"(
+		.globl func
+			.type func, @function
+			func:
+			.cfi_startproc
+			movl $7, %eax
+			ret
+			.cfi_endproc
+		)");
+		*/
+		 
 	}
 
 	inline BigDecimal operator- (BigDecimal x) {
@@ -83,27 +111,26 @@ public:
 	}
 };
 
+ 
 int main()
 {
 	BigDecimal x(34.00000000001);
-	BigDecimal y(22.00000000001);
-	BigDecimal z("31.55555555");
 
-	x.print();
-	y.print();
-	z.print();
 
-	(x + y).print();
-	(x * y).print();
+	x = x.increaseBy(2);
 
-	if (x > y) cout << "ok" << endl;
-
-	x = x.increaseBy(4);
-
-	x = x.increaseBy(3);
-
+	x = x.increaseBy(1);
 	x.print();
 
+	/*
+	int xx=0;
+	__asm {
+		lea ebx, xx
+		mov ecx, 1
+		add xx, ecx
+	}
+	cout << xx << endl;
+	*/
 	return 0;
 }
 
