@@ -17,6 +17,7 @@ private:
 		v = std::abs(v);
 		auto floored = v - std::floor(v);
 		T basefactor = 10;
+		//epsilon=the smallest difference between 2 numbers that my CPU can 'see'
 		T __CPUepsilon = std::numeric_limits<T>::epsilon() * floored;
 		while ((floored > __CPUepsilon && floored < (1 - __CPUepsilon)) && decs < std::numeric_limits<T>::max_digits10)
 		{
